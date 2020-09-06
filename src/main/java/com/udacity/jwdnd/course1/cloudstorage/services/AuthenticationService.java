@@ -40,6 +40,7 @@ public class AuthenticationService implements AuthenticationProvider {
     }
 
 
+
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
