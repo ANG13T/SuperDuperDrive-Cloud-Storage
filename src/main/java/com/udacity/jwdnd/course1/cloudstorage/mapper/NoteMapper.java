@@ -6,12 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface NoteMapper {
-    @Select("SELECT * FROM NOTES WHERE userid = #{userid}")
-    Note getNot(Integer userid);
+    @Select("SELECT * FROM NOTES")
+    List<Note> getNotes();
 
-    @Select("INSERT INTO NOTES (noteid, notetitle, notedescription, userid) VALUES(#{noteid}, #{notetitle}, #{notedescription}, #{userid})")
+    @Select("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES(#{notetitle}, #{notedescription}, #{userid})")
     @Options(useGeneratedKeys = true, keyProperty = "noteid")
-    int insert(Note note);
+    Integer insert(Note note);
 }
