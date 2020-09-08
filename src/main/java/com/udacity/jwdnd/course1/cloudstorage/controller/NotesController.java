@@ -1,48 +1,40 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
-import com.udacity.jwdnd.course1.cloudstorage.form.CredentialsForm;
-import com.udacity.jwdnd.course1.cloudstorage.form.NotesForm;
-import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-
-import com.udacity.jwdnd.course1.cloudstorage.services.CredentialsService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NotesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/notes")
+public class NotesController {
 
-    private NotesService notesService;
-    private CredentialsService credentialsService;
-    private UserService userService;
+    UserService userService;
+    NotesService notesService;
     String currentUserName;
 
-    public HomeController(NotesService notesService, CredentialsService credentialsService, UserService userService){
-        this.notesService = notesService;
-        this.credentialsService = credentialsService;
+    public NotesController(UserService userService, NotesService notesService){
         this.userService = userService;
+        this.notesService = notesService;
     }
 
-    @GetMapping
-    public String getHome(Model model){
+    @PostMapping
+    public String postNote(Model model, @ModelAttribute("note") Note note){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();
         }
         User currentUser = this.userService.getUser(currentUserName);
         model.addAttribute("note", new Note(currentUser.getUserId()));
-        model.addAttribute("credential", new Credential());
-        model.addAttribute("notes", this.notesService.getNotes());
-        model.addAttribute("credentials", this.credentialsService.getCredentials());
+        notesService.setNote(note);
         return "home";
     }
-
 }

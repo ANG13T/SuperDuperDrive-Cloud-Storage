@@ -21,7 +21,7 @@ public class CredentialsService {
         this.userMapper = userMapper;
     }
 
-    public List<Credential> getCredentials(Credential credential) {
+    public List<Credential> getCredentials() {
         return credentialMapper.getCredentials();
     }
 

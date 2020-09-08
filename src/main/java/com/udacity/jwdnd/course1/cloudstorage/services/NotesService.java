@@ -20,6 +20,7 @@ public class NotesService {
     }
 
     public List<Note> getNotes() {
+        noteMapper.getNotes().forEach(note -> System.out.println(note.getDescription()));
         return noteMapper.getNotes();
     }
 

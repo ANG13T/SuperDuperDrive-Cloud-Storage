@@ -89,8 +89,8 @@
                                             <button type="button" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
-                                        <th scope="row" th:text="${note.title}">Example Title</th>
-                                        <td th:text="${note.description}">Example Note Description</td>
+                                        <th scope="row" th:text="${note.notetitle}">Example Title</th>
+                                        <td th:text="${note.notedescription}">Example Note Description</td>
 
                                     </tr>
                                 </tbody>
@@ -107,15 +107,15 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:object="${notesForm}" th:action="@{/home}" action="#" method="POST">
-                                            <input type="hidden" name="noteId" id="note-id" th:field="*{id}">
+                                        <form th:action="@{/notes}" action="notes" method="POST" modelAttribute="note">
+                                            <input type="hidden" name="noteId" id="note-id" th:field="*{note.id}">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
-                                                <input type="text" name= "noteTitle" class="form-control" id="note-title" th:field="*{title}" maxlength="20" required>
+                                                <input type="text" name= "noteTitle" class="form-control" id="note-title" th:field="*{note.title}" maxlength="20" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-description" class="col-form-label">Description</label>
-                                                <textarea class="form-control" name="noteDescription" id="note-description" th:field="*{description}" rows="5" maxlength="1000" required></textarea>
+                                                <textarea class="form-control" name="noteDescription" id="note-description" th:field="*{note.description}" rows="5" maxlength="1000" required></textarea>
                                             </div>
                                             <button id="noteSubmit" type="submit" class="d-none"></button>
                                         </form>
@@ -167,19 +167,19 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:object="${credentialsForm}" th:action="@{/home}" action="#" method="POST">
-                                            <input type="hidden" name="credentialId" id="credential-id" th:field="*{id}">
+                                        <form modelAttribute="credential" action="credentials" th:action="@{/credentials}" method="POST">
+                                            <input type="hidden" name="credentialId" id="credential-id" th:field="*{credential.id}">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>
-                                                <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" th:field="*{url}" required>
+                                                <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" th:field="*{credential.url}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Username</label>
-                                                <input type="text" name= "username" class="form-control" id="credential-username" th:field="*{username}" maxlength="30" required>
+                                                <input type="text" name= "username" class="form-control" id="credential-username" th:field="*{credential.username}" maxlength="30" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Password</label>
-                                                <input type="text" name= "password" class="form-control" id="credential-password" th:field="*{password}" maxlength="30" required>
+                                                <input type="text" name= "password" class="form-control" id="credential-password" th:field="*{credential.password}" maxlength="30" required>
                                             </div>
                                             <button id="credentialSubmit" type="submit" class="d-none"></button>
                                         </form>

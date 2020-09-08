@@ -1,28 +1,43 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Note {
-     private String noteid;
-     private String notetitle;
-     private String notedescription;
+     @Id
+     @Column(name = "id")
+     @GeneratedValue
+     private Long id;
+
+     private String title;
+     private String description;
      private Integer userid;
 
-     public Note(String noteid, String notetitle, String notedescription, Integer userid){
-          this.noteid = noteid;
-          this.notetitle = notetitle;
-          this.notedescription = notedescription;
+     public Note(String title, String description, Integer userid){
+          this.title = title;
+          this.description = description;
           this.userid = userid;
      }
 
-     public void setNoteid(String noteid){
-          this.noteid = noteid;
+     public Note(){}
+
+     public Note(Integer userid){
+          this.userid = userid;
      }
 
-     public void setNotetitle(String notetitle){
-          this.notetitle = notetitle;
+     public void setId(Long id){
+          this.id = id;
      }
 
-     public void setNotedescription(String notedescription){
-          this.notedescription = notedescription;
+     public void setTitle(String title){
+          this.title = title;
+     }
+
+     public void setDescription(String description){
+          this.description = description;
      }
 
      public void setUserid(Integer userId){
@@ -33,16 +48,16 @@ public class Note {
           return this.userid;
      }
 
-     public String getNoteid(){
-          return this.noteid;
+     public Long getId(){
+          return this.id;
      }
 
-     public String getNotedescription(){
-          return this.notedescription;
+     public String getDescription(){
+          return this.description;
      }
 
-     public String getNotetitle(){
-          return this.notetitle;
+     public String getTitle(){
+          return this.title;
      }
 
 }
