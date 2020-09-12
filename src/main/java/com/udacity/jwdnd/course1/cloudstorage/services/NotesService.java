@@ -27,11 +27,22 @@ public class NotesService {
     }
 
     public void setNote(Note n){
-        System.out.println("Creating note...");
-        noteMapper.insert(n);
+        if(noteMapper.getNote(n.getId()) != null){
+            //update note
+            System.out.println("updating note...");
+            noteMapper.update(n);
+        }else{
+            //create note
+            System.out.println("Creating note...");
+            noteMapper.insert(n);
+        }
     }
 
     public void deleteNote(Long id){
         noteMapper.delete(id);
+    }
+
+    public Note getNote(Long id){
+        return noteMapper.getNote(id);
     }
 }

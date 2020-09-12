@@ -46,4 +46,11 @@ public class NotesController {
         this.notesService.deleteNote(Long.parseLong(id));
         return "redirect:/home";
     }
+
+    @RequestMapping(value= "{id}/edit", method = RequestMethod.GET)
+    public void editNote(@PathVariable("id") Long id, Model model) {
+        System.out.println("Editing note");
+        System.out.println(this.notesService.getNote(id));
+        model.addAttribute("note", this.notesService.getNote(id));
+    }
 }
