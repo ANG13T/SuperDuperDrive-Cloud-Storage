@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/credentials")
@@ -31,7 +32,7 @@ public class CredentialsController {
 
 
     @PostMapping
-    public String postCredentials(@ModelAttribute("credential") Credential credential, Model model){
+    public RedirectView postCredentials(@ModelAttribute("credential") Credential credential, Model model){
         System.out.println("creating credential...");
         System.out.println(credential.getUsername());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -41,7 +42,7 @@ public class CredentialsController {
         User currentUser = this.userService.getUser(currentUserName);
         credential.setUserid(currentUser.getUserId());
         this.credentialsService.setCredential(credential);
-        return "home";
+        return new RedirectView("home");
     }
 
 }

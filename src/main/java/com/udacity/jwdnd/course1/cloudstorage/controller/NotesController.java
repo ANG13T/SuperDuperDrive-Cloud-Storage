@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/notes")
@@ -27,7 +28,7 @@ public class NotesController {
     }
 
     @PostMapping
-    public String postNote(Model model, @ModelAttribute("note") Note note){
+    public RedirectView postNote(Model model, @ModelAttribute("note") Note note){
         System.out.println("creating note....");
         System.out.println(note.getTitle() + "," + note.getDescription());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -35,7 +36,8 @@ public class NotesController {
             currentUserName = authentication.getName();
         }
         User currentUser = this.userService.getUser(currentUserName);
+        note.setUserid(currentUser.getUserId());
         notesService.setNote(note);
-        return "home";
+        return new RedirectView("home");
     }
 }
