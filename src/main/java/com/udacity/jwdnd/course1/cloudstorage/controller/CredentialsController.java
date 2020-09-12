@@ -10,10 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -43,6 +41,15 @@ public class CredentialsController {
         credential.setUserid(currentUser.getUserId());
         this.credentialsService.setCredential(credential);
         return new RedirectView("home");
+    }
+
+    @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
+    public String handleDeleteCredential(@PathVariable String id) {
+        System.out.println(id);
+        System.out.println("deleting credential");
+        this.credentialsService.deleteCredential(Long.parseLong(id));
+        System.out.println("deleted credential");
+        return "redirect:/home";
     }
 
 }

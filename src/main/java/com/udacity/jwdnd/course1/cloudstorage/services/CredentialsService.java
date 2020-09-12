@@ -27,6 +27,14 @@ public class CredentialsService {
         return credentialMapper.getCredentials();
     }
 
+    public void deleteCredential(Long id){
+        credentialMapper.delete(id);
+    }
+
+    public void updateCredential(Credential credential){
+        credentialMapper.update(credential);
+    }
+
     public void setCredential(Credential credential){
         credentialMapper.insert(credential);
     }
