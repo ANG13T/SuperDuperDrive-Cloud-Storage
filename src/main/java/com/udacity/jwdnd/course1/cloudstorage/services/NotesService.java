@@ -20,11 +20,11 @@ public class NotesService {
     }
 
     public List<Note> getNotes() {
-        noteMapper.getNotes().forEach(note -> System.out.println(note.getDescription()));
         return noteMapper.getNotes();
     }
 
     public void setNote(Note n){
+        System.out.println("Creating note...");
         noteMapper.insert(n);
     }
 }

@@ -2,13 +2,14 @@ package com.udacity.jwdnd.course1.cloudstorage.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 public class Credential {
      @Id
-     @Column(name = "id")
+     @Column(name = "credentialid")
      @GeneratedValue
-     private Long id;
+     private Long credentialid;
 
      private String url;
      private String username;
@@ -25,12 +26,12 @@ public class Credential {
 
      public Credential(){}
 
-     public void setId(Long id){
-          this.id = id;
+     public void setCredentialid(Long credentialid){
+          this.credentialid = credentialid;
      }
 
-     public Long getId(){
-          return this.id;
+     public Long getCredentialid(){
+          return this.credentialid;
      }
 
      public void setUsername(String username){

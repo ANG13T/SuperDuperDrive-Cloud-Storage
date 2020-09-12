@@ -22,6 +22,8 @@ public class CredentialsService {
     }
 
     public List<Credential> getCredentials() {
+        System.out.println("Getting credentials....");
+        System.out.println(credentialMapper.getCredentials());
         return credentialMapper.getCredentials();
     }
 

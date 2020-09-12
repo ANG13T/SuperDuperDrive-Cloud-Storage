@@ -28,12 +28,13 @@ public class NotesController {
 
     @PostMapping
     public String postNote(Model model, @ModelAttribute("note") Note note){
+        System.out.println("creating note....");
+        System.out.println(note.getTitle() + "," + note.getDescription());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();
         }
         User currentUser = this.userService.getUser(currentUserName);
-        model.addAttribute("note", new Note(currentUser.getUserId()));
         notesService.setNote(note);
         return "home";
     }

@@ -38,7 +38,7 @@ public class HomeController {
             currentUserName = authentication.getName();
         }
         User currentUser = this.userService.getUser(currentUserName);
-        model.addAttribute("note", new Note(currentUser.getUserId()));
+        model.addAttribute("note", new Note());
         model.addAttribute("credential", new Credential());
         model.addAttribute("notes", this.notesService.getNotes());
         model.addAttribute("credentials", this.credentialsService.getCredentials());
