@@ -10,6 +10,12 @@
     </head>
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container" id="homeContain">
+            <div class="alert alert-dark" th:if="${error == false}">
+                <span th:text="${param.q}"></span>
+            </div>
+            <div class="alert alert-danger" th:if="${error}">
+                <span th:text="${errorMessage}">Something went wrong.</span>
+            </div>
             <div id="logoutDiv">
                 <form th:action="@{/doLogout}" action="#" method="POST">
                     <button type="submit" class="btn btn-secondary float-right" id="logOutButton">Logout</button>
@@ -32,7 +38,7 @@
                                         <label for="fileUpload">Upload a New File:</label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
+                                        <input type="file" class="form-control-file" id="fileUpload" name="fileUpload" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <button type="submit" class="btn btn-dark">Upload</button>
@@ -141,7 +147,7 @@
 
                                 <tr th:each="credential : ${credentials}">
                                     <td>
-                                        <button type="button" th:attr="onclick=|showCredentialModal('${credential.credentialid}', '${credential.url}', '${credential.username}', '${credential.password}')|" class="btn btn-success">Edit</button>
+                                        <button type="button" th:attr="onclick=|showCredentialModal('${credential.credentialid}', '${credential.url}', '${credential.username}', '${credential.decryptedPassword}')|" class="btn btn-success">Edit</button>
                                         <a class="btn btn-danger" th:href="@{credentials/__${credential.credentialid}__/delete}">Delete</a>
                                     </td>
                                     <th scope="row" th:text="${credential.url}">Example Credential URL</th>

@@ -65,7 +65,7 @@ public class FileController {
         }catch(IOException exception){
             System.out.println("Something went wrong");
         }
-        return "redirect:/home";
+        return "redirect:/home?q=File+created!";
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)

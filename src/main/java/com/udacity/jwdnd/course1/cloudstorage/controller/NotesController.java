@@ -36,7 +36,7 @@ public class NotesController {
         User currentUser = this.userService.getUser(currentUserName);
         note.setUserid(currentUser.getUserId());
         notesService.setNote(note);
-        return new RedirectView("home");
+        return new RedirectView("home?q=Note+created!");
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
