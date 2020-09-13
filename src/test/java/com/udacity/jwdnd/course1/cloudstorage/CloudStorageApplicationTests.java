@@ -14,6 +14,9 @@ class CloudStorageApplicationTests {
 	private int port;
 
 	private WebDriver driver;
+	private LoginPage loginPage;
+	private SignUpPage signUpPage;
+	private HomePage homePage;
 
 	@BeforeAll
 	static void beforeAll() {
@@ -23,6 +26,9 @@ class CloudStorageApplicationTests {
 	@BeforeEach
 	public void beforeEach() {
 		this.driver = new ChromeDriver();
+		loginPage = new LoginPage(driver);
+		signUpPage = new SignUpPage(driver);
+		homePage = new HomePage(driver);
 	}
 
 	@AfterEach
@@ -39,8 +45,20 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
-	public void testIfHomePageAccessible(){
+	public void testIfHomePageAccessibleIfLoggedIn(){
 		driver.get("http://localhost:" + this.port + "/signup");
+		signUpPage.enterForm();
+		loginPage.login();
+		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/home");
+	}
+
+	@Test
+	public void testIfHomePageUnAccessibleIfLoggedOut(){
+		driver.get("http://localhost:" + this.port + "/signup");
+		signUpPage.enterForm();
+		loginPage.login();
+		homePage.logOut();
+		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/signup");
 	}
 
 }

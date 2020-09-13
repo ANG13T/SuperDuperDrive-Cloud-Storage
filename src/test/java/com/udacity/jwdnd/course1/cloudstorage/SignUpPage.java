@@ -1,6 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class SignUpPage {
@@ -19,22 +21,20 @@ public class SignUpPage {
     @FindBy(id = "signupButton")
     private WebElement signUpButton;
 
+    @FindBy(id = "loginLink")
+    private WebElement loginButton;
 
-    public HomePage(WebDriver driver) {
+    public SignUpPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
-    public int getDisplayedCount() {
-        return Integer.parseInt(countDisplay.getText());
+    public void enterForm(){
+        firstInput.sendKeys("John");
+        lastInput.sendKeys("Doe");
+        usernamenameInput.sendKeys("johndoe@gmail.com");
+        passInupt.sendKeys("123456ABC");
+        signUpButton.click();
+        loginButton.click();
     }
 
-    public void incrementCount() {
-        incrementButton.click();
-    }
-
-    public void resetCount(int value) {
-        resetValueField.clear();
-        resetValueField.sendKeys(String.valueOf(value));
-        resetButton.click();
-    }
 }

@@ -9,10 +9,10 @@
         <title>Home</title>
     </head>
     <body class="p-3 mb-2 bg-light text-black">
-        <div class="container">
+        <div class="container" id="homeContain">
             <div id="logoutDiv">
                 <form th:action="@{/doLogout}" action="#" method="POST">
-                    <button type="submit" class="btn btn-secondary float-right">Logout</button>
+                    <button type="submit" class="btn btn-secondary float-right" id="logOutButton">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
