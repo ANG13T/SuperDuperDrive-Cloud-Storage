@@ -31,11 +31,14 @@ public class CredentialsService {
         credentialMapper.delete(id);
     }
 
-    public void updateCredential(Credential credential){
-        credentialMapper.update(credential);
-    }
 
     public void setCredential(Credential credential){
-        credentialMapper.insert(credential);
+        if(credentialMapper.getCredential(credential.getCredentialid()) != null){
+            //update cred
+            credentialMapper.update(credential);
+        }else{
+            //create cred
+            credentialMapper.insert(credential);
+        }
     }
 }
