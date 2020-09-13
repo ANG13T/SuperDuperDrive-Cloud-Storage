@@ -83,8 +83,12 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/home");
 		homePage.goToNotes();
 		homePage.editNote("edit1");
-//		homePage.deleteNote("1");
-		Assertions.assertEquals(homePage.noteAmount(), 1);
+		driver.get("http://localhost:" + this.port + "/home");
+		homePage.goToNotes();
+		homePage.deleteNote("delete1");
+		driver.get("http://localhost:" + this.port + "/home");
+		homePage.goToNotes();
+		Assertions.assertEquals(homePage.noteAmount(), 0);
 	}
 
 	@Test
@@ -94,6 +98,16 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/login");
 		loginPage.login();
 		driver.get("http://localhost:" + this.port + "/home");
+		homePage.createCredential();
+		driver.get("http://localhost:" + this.port + "/home");
+		homePage.goToCreds();
+		homePage.editCredential("editC1");
+		driver.get("http://localhost:" + this.port + "/home");
+		homePage.goToCreds();
+		homePage.deleteCredential("deleteC1");
+		driver.get("http://localhost:" + this.port + "/home");
+		homePage.goToCreds();
+		Assertions.assertEquals(homePage.credsAmount(), 0);
 	}
 
 

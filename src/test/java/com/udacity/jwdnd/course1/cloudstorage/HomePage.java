@@ -91,6 +91,10 @@ public class HomePage {
         return driver.findElements(By.className("note")).size();
     }
 
+    public int credsAmount(){
+        return driver.findElements(By.className("cred")).size();
+    }
+
     public void editNote(String noteId){
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(noteId)))).click();
         wait.until(ExpectedConditions.visibilityOf(createNoteForm));

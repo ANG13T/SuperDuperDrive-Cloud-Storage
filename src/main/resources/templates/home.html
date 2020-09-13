@@ -85,7 +85,7 @@
                                     <tr th:each="note : ${notes}" id="${note.id}" class="note">
                                         <td>
                                             <button type="button" th:attr="onclick=|showNoteModal('${note.id}', '${note.title}', '${note.description}')|" class="btn btn-success" th:id="'edit' + ${note.id}">Edit</button>
-                                            <a class="btn btn-danger" th:href="@{notes/__${note.id}__/delete}">Delete</a>
+                                            <a class="btn btn-danger" th:href="@{notes/__${note.id}__/delete}" th:id="'delete' + ${note.id}">Delete</a>
                                         </td>
                                         <th scope="row" th:text="${note.title}">Example Title</th>
                                         <td th:text="${note.description}">Example Note Description</td>
@@ -145,10 +145,10 @@
                                 </thead>
                                 <tbody>
 
-                                <tr th:each="credential : ${credentials}">
+                                <tr th:each="credential : ${credentials}" class="cred">
                                     <td>
-                                        <button type="button" th:attr="onclick=|showCredentialModal('${credential.credentialid}', '${credential.url}', '${credential.username}', '${credential.decryptedPassword}')|" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger" th:href="@{credentials/__${credential.credentialid}__/delete}">Delete</a>
+                                        <button type="button" th:attr="onclick=|showCredentialModal('${credential.credentialid}', '${credential.url}', '${credential.username}', '${credential.decryptedPassword}')|" class="btn btn-success" th:id="'editC' + ${credential.credentialid}">Edit</button>
+                                        <a class="btn btn-danger" th:href="@{credentials/__${credential.credentialid}__/delete}" th:id="'deleteC' + ${credential.credentialid}">Delete</a>
                                     </td>
                                     <th scope="row" th:text="${credential.url}">Example Credential URL</th>
                                     <td th:text="${credential.username}">Example Credential Username</td>
