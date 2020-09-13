@@ -22,8 +22,8 @@ public class NotesService {
         this.userMapper = userMapper;
     }
 
-    public List<Note> getNotes() {
-        return noteMapper.getNotes();
+    public List<Note> getNotes(Integer userid) {
+        return noteMapper.getNotes(userid);
     }
 
     public void setNote(Note n){

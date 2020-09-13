@@ -31,10 +31,10 @@ public class CredentialsService {
         this.encryptionService = encryptionService;
     }
 
-    public List<Credential> getCredentials() {
+    public List<Credential> getCredentials(Integer userId) {
         System.out.println("Getting credentials....");
-        System.out.println(credentialMapper.getCredentials());
-        List<Credential> creds = credentialMapper.getCredentials();
+        System.out.println(credentialMapper.getCredentials(userId));
+        List<Credential> creds = credentialMapper.getCredentials(userId);
         if(!creds.isEmpty()){
             creds.forEach(credential -> {
                 String decryptedPassword = encryptionService.decryptValue(credential.getPassword(), encodedKey);
@@ -49,15 +49,17 @@ public class CredentialsService {
     }
 
 
-    public void setCredential(Credential credential){
+    public void setCredential(Credential credential, Integer userId){
         System.out.println("setting credential");
         credential.setPassword(encryptionService.encryptValue(credential.getPassword(), encodedKey));
-        System.out.println(credentialMapper.getCredential(credential.getCredentialid()));
-        if(credentialMapper.getCredential(credential.getCredentialid()) != null){
+        System.out.println(credentialMapper.getCredential(credential.getCredentialid(), userId));
+        if(credentialMapper.getCredential(credential.getCredentialid(), userId) != null){
             //update cred
+            System.out.println("updating note");
             credentialMapper.update(credential);
         }else{
             //create cred
+            System.out.println("creating note");
             credentialMapper.insert(credential);
         }
     }

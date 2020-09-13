@@ -31,16 +31,15 @@ public class CredentialsController {
 
     @PostMapping
     public RedirectView postCredentials(@ModelAttribute("credential") Credential credential, Model model){
-        System.out.println("creating credential...");
-        System.out.println(credential.getUsername());
-        System.out.println(credential.getPassword());
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();
         }
         User currentUser = this.userService.getUser(currentUserName);
         credential.setUserid(currentUser.getUserId());
-        this.credentialsService.setCredential(credential);
+
+        this.credentialsService.setCredential(credential, currentUser.getUserId());
         model.addAttribute("successMessage", "Credential created!");
         return new RedirectView("home?q=Credential+created!");
     }

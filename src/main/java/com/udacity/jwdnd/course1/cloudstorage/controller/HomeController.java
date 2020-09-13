@@ -166,9 +166,9 @@ public class HomeController {
         model.addAttribute("error", false);
         model.addAttribute("errorMessage", "");
         model.addAttribute("successMessage", "");
-        model.addAttribute("notes", this.notesService.getNotes());
-        model.addAttribute("credentials", this.credentialsService.getCredentials());
-        model.addAttribute("files", this.fileService.getFiles());
+        model.addAttribute("notes", this.notesService.getNotes(currentUser.getUserId()));
+        model.addAttribute("credentials", this.credentialsService.getCredentials(currentUser.getUserId()));
+        model.addAttribute("files", this.fileService.getFiles(currentUser.getUserId()));
         return "home";
     }
 

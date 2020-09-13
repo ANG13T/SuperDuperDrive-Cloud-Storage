@@ -23,8 +23,8 @@ public class FileService {
         fileMapper.insert(file);
     }
 
-    public List<File> getFiles(){
-        return fileMapper.getFiles();
+    public List<File> getFiles(Integer userid){
+        return fileMapper.getFiles(userid);
     }
 
     public File getFile(Long id){
