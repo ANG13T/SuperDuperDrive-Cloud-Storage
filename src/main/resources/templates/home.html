@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button style="margin: 0.25em;" id="createNote" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
 
@@ -76,7 +76,7 @@
                                 </thead>
                                 <tbody>
 
-                                    <tr th:each="note : ${notes}">
+                                    <tr th:each="note : ${notes}" id="${note.id}">
                                         <td>
                                             <button type="button" th:attr="onclick=|showNoteModal('${note.id}', '${note.title}', '${note.description}')|" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger" th:href="@{notes/__${note.id}__/delete}">Delete</a>
@@ -99,7 +99,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" th:object="${note}" action="#" th:action="@{/notes}">
+                                        <form method="POST" th:object="${note}" action="#" th:action="@{/notes}" id="createNoteForm">
                                             <input type="hidden" name="noteId" id="note-id" th:field="*{id}">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>

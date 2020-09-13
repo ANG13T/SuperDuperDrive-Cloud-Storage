@@ -62,4 +62,21 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/login");
 	}
 
+	@Test
+	public void createEditDeleteNote(){
+		driver.get("http://localhost:" + this.port + "/signup");
+		signUpPage.enterForm();
+		loginPage.login();
+		homePage.createNote();
+		Assertions.assertEquals(homePage.hasNote("1"), true);
+	}
+
+	@Test
+	public void createEditDeleteCredential(){
+		driver.get("http://localhost:" + this.port + "/signup");
+		signUpPage.enterForm();
+		loginPage.login();
+	}
+
+
 }
