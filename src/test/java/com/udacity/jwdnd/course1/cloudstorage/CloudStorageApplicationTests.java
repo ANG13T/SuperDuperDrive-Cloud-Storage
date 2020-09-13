@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import java.util.concurrent.TimeUnit;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
 
@@ -46,6 +48,13 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	public void signUp(){
+		driver.get("http://localhost:" + this.port + "/signup");
+		signUpPage.enterForm();
+		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/login");
+	}
+
+	@Test
 	public void testIfHomePageAccessibleIfLoggedIn(){
 		driver.get("http://localhost:" + this.port + "/signup");
 		signUpPage.enterForm();
@@ -57,6 +66,7 @@ class CloudStorageApplicationTests {
 	public void testIfHomePageUnAccessibleIfLoggedOut(){
 		driver.get("http://localhost:" + this.port + "/signup");
 		signUpPage.enterForm();
+		driver.get("http://localhost:" + this.port + "/login");
 		loginPage.login();
 		homePage.logOut();
 		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/login");
@@ -66,16 +76,24 @@ class CloudStorageApplicationTests {
 	public void createEditDeleteNote(){
 		driver.get("http://localhost:" + this.port + "/signup");
 		signUpPage.enterForm();
+		driver.get("http://localhost:" + this.port + "/login");
 		loginPage.login();
+		driver.get("http://localhost:" + this.port + "/home");
 		homePage.createNote();
-		Assertions.assertEquals(homePage.hasNote("1"), true);
+		driver.get("http://localhost:" + this.port + "/home");
+		homePage.goToNotes();
+		homePage.editNote("edit1");
+//		homePage.deleteNote("1");
+		Assertions.assertEquals(homePage.noteAmount(), 1);
 	}
 
 	@Test
 	public void createEditDeleteCredential(){
 		driver.get("http://localhost:" + this.port + "/signup");
 		signUpPage.enterForm();
+		driver.get("http://localhost:" + this.port + "/login");
 		loginPage.login();
+		driver.get("http://localhost:" + this.port + "/home");
 	}
 
 

@@ -15,6 +15,9 @@ public class HomePage {
     @FindBy(id = "createNote")
     private WebElement createNoteButton;
 
+    @FindBy(id = "addCred")
+    private WebElement addCredButton;
+
     @FindBy(id = "createNoteForm")
     private WebElement createNoteForm;
 
@@ -24,8 +27,33 @@ public class HomePage {
     @FindBy(id = "note-description")
     private WebElement noteDescription;
 
-    @FindBy(id = "noteSubmit")
+    @FindBy(id = "nav-notes-tab")
+    private WebElement navNotes;
+
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement navCreds;
+
+    @FindBy(id = "createCredForm")
+    private WebElement createCredsForm;
+
+    @FindBy(id = "credential-url")
+    private WebElement credUrl;
+
+    @FindBy(id = "credential-username")
+    private WebElement credUsername;
+
+    @FindBy(id = "credential-password")
+    private WebElement credPassword;
+
+    @FindBy(id = "credSubmit")
+    private WebElement credSubmit;
+
+
+
+
+    @FindBy(id = "noteSubmitButton")
     private WebElement noteSubmit;
+
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -38,39 +66,64 @@ public class HomePage {
     }
 
     public void logOut(){
-        logoutButton.click();
+        wait.until(ExpectedConditions.visibilityOf(logoutButton)).click();
     }
 
     public void createNote(){
-        wait.until(ExpectedConditions.visibilityOf(createNoteButton));
-        createNoteButton.click();
+        wait.until(ExpectedConditions.visibilityOf(navNotes)).click();
+        wait.until(ExpectedConditions.visibilityOf(createNoteButton)).click();
         wait.until(ExpectedConditions.visibilityOf(createNoteForm));
         noteTitle.sendKeys("New note");
         noteDescription.sendKeys("Cool Note");
-        noteSubmit.submit();
+        noteSubmit.click();
+        wait.until(ExpectedConditions.urlContains("Note"));
     }
 
-    public boolean hasNote(String noteID){
-        return driver.findElements(By.id(noteID)).size() > 0;
+    public void goToNotes(){
+        wait.until(ExpectedConditions.visibilityOf(navNotes)).click();
     }
 
-    public void editNote(){
-
+    public void goToCreds(){
+        wait.until(ExpectedConditions.visibilityOf(navCreds)).click();
     }
 
-    public void deleteNote(){
+    public int noteAmount(){
+        return driver.findElements(By.className("note")).size();
+    }
 
+    public void editNote(String noteId){
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(noteId)))).click();
+        wait.until(ExpectedConditions.visibilityOf(createNoteForm));
+        noteTitle.sendKeys("Updated note");
+        noteDescription.sendKeys("This is a Note");
+        noteSubmit.click();
+    }
+
+    public void deleteNote(String noteId){
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(noteId)))).click();
     }
 
     public void createCredential(){
-
+        wait.until(ExpectedConditions.visibilityOf(navCreds)).click();
+        wait.until(ExpectedConditions.visibilityOf(addCredButton)).click();
+        wait.until(ExpectedConditions.visibilityOf(createCredsForm));
+        credUrl.sendKeys("https://google.com");
+        credUsername.sendKeys("jane@gmail.com");
+        credPassword.sendKeys("12345");
+        credSubmit.click();
+        wait.until(ExpectedConditions.urlContains("Credential"));
     }
 
-    public void editCredential(){
-
+    public void editCredential(String credentialId){
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(credentialId)))).click();
+        wait.until(ExpectedConditions.visibilityOf(createCredsForm));
+        credUrl.sendKeys("Google.com");
+        credUsername.sendKeys("Jame");
+        credPassword.sendKeys("67");
+        credSubmit.click();
     }
 
-    public void deleteCredential(){
-
+    public void deleteCredential(String credentialId){
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(credentialId)))).click();
     }
 }

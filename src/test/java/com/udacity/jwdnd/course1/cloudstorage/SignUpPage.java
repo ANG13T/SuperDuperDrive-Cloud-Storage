@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class SignUpPage {
     @FindBy(id = "inputFirstName")
     private WebElement firstInput;
@@ -28,9 +30,17 @@ public class SignUpPage {
     @FindBy(id = "loginLink")
     private WebElement loginButton;
 
+    @FindBy(id = "loginRedirect")
+    private WebElement loginRedirect;
+
+    private WebDriverWait wait;
+    private int port;
+
 
     public SignUpPage(WebDriver driver) {
         this.driver = driver;
+        this.port = port;
+        wait = new WebDriverWait(driver, 1000);
         PageFactory.initElements(driver, this);
     }
 
@@ -40,7 +50,7 @@ public class SignUpPage {
         usernamenameInput.sendKeys("johndoe@gmail.com");
         passInupt.sendKeys("123456ABC");
         signUpButton.click();
-        loginButton.click();
+        wait.until(ExpectedConditions.visibilityOf(loginRedirect));
     }
 
 }

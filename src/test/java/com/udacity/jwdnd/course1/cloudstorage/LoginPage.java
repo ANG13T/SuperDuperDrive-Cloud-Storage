@@ -8,17 +8,21 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Driver;
+import java.util.concurrent.TimeUnit;
 
 public class LoginPage {
 
-    @FindBy(id = "inputUsername")
+    @FindBy(id = "loginInputUsername")
     private WebElement usernamenameInput;
 
-    @FindBy(id = "inputPassword")
+    @FindBy(id = "loginInputPassword")
     private WebElement passInupt;
 
     @FindBy(id = "loginButton")
     private WebElement loginButton;
+
+    @FindBy(id = "homeContain")
+    private WebElement homeContainer;
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -27,13 +31,13 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
-        wait = new WebDriverWait(driver, 1000);
+        wait = new WebDriverWait(driver, 4000);
     }
 
     public void login(){
-        usernamenameInput.sendKeys("johndoe@gmail.com");
+        wait.until(ExpectedConditions.visibilityOf(usernamenameInput)).sendKeys("johndoe@gmail.com");
         passInupt.sendKeys("123456ABC");
-        wait.until(ExpectedConditions.visibilityOf(loginButton));
         loginButton.click();
+        wait.until(ExpectedConditions.visibilityOf(homeContainer));
     }
 }
