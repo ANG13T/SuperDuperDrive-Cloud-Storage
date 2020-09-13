@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignUpPage {
     @FindBy(id = "inputFirstName")
@@ -11,6 +13,8 @@ public class SignUpPage {
 
     @FindBy(id = "inputLastName")
     private WebElement lastInput;
+
+    WebDriver driver;
 
     @FindBy(id = "inputUsername")
     private WebElement usernamenameInput;
@@ -24,7 +28,9 @@ public class SignUpPage {
     @FindBy(id = "loginLink")
     private WebElement loginButton;
 
+
     public SignUpPage(WebDriver driver) {
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 

@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -58,7 +59,7 @@ class CloudStorageApplicationTests {
 		signUpPage.enterForm();
 		loginPage.login();
 		homePage.logOut();
-		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/signup");
+		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/login");
 	}
 
 }
