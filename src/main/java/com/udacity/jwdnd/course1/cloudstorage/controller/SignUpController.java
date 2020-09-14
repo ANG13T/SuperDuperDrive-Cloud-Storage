@@ -44,6 +44,7 @@ public class SignUpController {
 
         if(signUpError == false){
             model.addAttribute("signupSuccess", true);
+            return "redirect:/login";
         }else{
             System.out.println("There are some errors");
             model.addAttribute("signupSuccess", false);

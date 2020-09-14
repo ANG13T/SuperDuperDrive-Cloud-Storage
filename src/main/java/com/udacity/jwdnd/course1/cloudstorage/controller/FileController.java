@@ -51,19 +51,30 @@ public class FileController {
             InputStream fis = fileUpload.getInputStream();
             String currentUserName = "";
 
-
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (!(authentication instanceof AnonymousAuthenticationToken)) {
                 currentUserName = authentication.getName();
             }
 
 
+
             Integer userID = userService.getUser(currentUserName).getUserId();
             File uploadFile = new File(fileUpload.getName(), fileUpload.getContentType(), fileUpload.getOriginalFilename(), userID, fileUpload.getBytes());
+
+            if(fileService.getByName(uploadFile.getFilename()) != null){
+                throw new IOException();
+            }
+
+            Long fileSize = fileUpload.getSize();
+
+            System.out.println(fileSize);
+            if(fileSize > 1000000){
+                throw new IOException();
+            }
             System.out.println(uploadFile);
             this.fileService.setFile(uploadFile);
         }catch(IOException exception){
-            System.out.println("Something went wrong");
+            return "redirect:/home?q=Something+went+wrong+while+creating+file";
         }
         return "redirect:/home?q=File+created!";
     }
@@ -73,7 +84,7 @@ public class FileController {
         System.out.println(id);
         System.out.println("deleting file");
         this.fileService.deleteFile(Long.parseLong(id));
-        return "redirect:/home";
+        return "redirect:/home?q=File+deleted!";
     }
 
     @RequestMapping(value = "{id}/view", method = RequestMethod.GET)

@@ -40,11 +40,11 @@ public class NotesController {
     }
 
     @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
-    public String handleDeleteNote(@PathVariable String id) {
+    public RedirectView handleDeleteNote(@PathVariable String id) {
         System.out.println(id);
         System.out.println("deleting note");
         this.notesService.deleteNote(Long.parseLong(id));
-        return "redirect:/home";
+        return new RedirectView("home?q=Note+deleted!");
     }
 
 }

@@ -16,19 +16,21 @@ class CloudStorageApplicationTests {
 	@LocalServerPort
 	private int port;
 
-	private WebDriver driver;
+	private static WebDriver driver;
 	private LoginPage loginPage;
 	private SignUpPage signUpPage;
 	private HomePage homePage;
 
+
+
 	@BeforeAll
 	static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
 	}
 
 	@BeforeEach
 	public void beforeEach() {
-		this.driver = new ChromeDriver();
 		loginPage = new LoginPage(driver);
 		signUpPage = new SignUpPage(driver);
 		homePage = new HomePage(driver);
@@ -36,10 +38,17 @@ class CloudStorageApplicationTests {
 
 	@AfterEach
 	public void afterEach() {
+
+	}
+
+	@AfterAll
+	public void afterAll(){
 		if (this.driver != null) {
 			driver.quit();
 		}
 	}
+
+
 
 	@Test
 	public void getLoginPage() {
@@ -54,61 +63,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/login");
 	}
 
-	@Test
-	public void testIfHomePageAccessibleIfLoggedIn(){
-		driver.get("http://localhost:" + this.port + "/signup");
-		signUpPage.enterForm();
-		loginPage.login();
-		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/home");
-	}
 
-	@Test
-	public void testIfHomePageUnAccessibleIfLoggedOut(){
-		driver.get("http://localhost:" + this.port + "/signup");
-		signUpPage.enterForm();
-		driver.get("http://localhost:" + this.port + "/login");
-		loginPage.login();
-		homePage.logOut();
-		Assertions.assertEquals(driver.getCurrentUrl(), "http://localhost:" + this.port + "/login");
-	}
-
-	@Test
-	public void createEditDeleteNote(){
-		driver.get("http://localhost:" + this.port + "/signup");
-		signUpPage.enterForm();
-		driver.get("http://localhost:" + this.port + "/login");
-		loginPage.login();
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.createNote();
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.goToNotes();
-		homePage.editNote("edit1");
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.goToNotes();
-		homePage.deleteNote("delete1");
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.goToNotes();
-		Assertions.assertEquals(homePage.noteAmount(), 0);
-	}
-
-	@Test
-	public void createEditDeleteCredential(){
-		driver.get("http://localhost:" + this.port + "/signup");
-		signUpPage.enterForm();
-		driver.get("http://localhost:" + this.port + "/login");
-		loginPage.login();
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.createCredential();
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.goToCreds();
-		homePage.editCredential("editC1");
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.goToCreds();
-		homePage.deleteCredential("deleteC1");
-		driver.get("http://localhost:" + this.port + "/home");
-		homePage.goToCreds();
-		Assertions.assertEquals(homePage.credsAmount(), 0);
-	}
 
 
 }

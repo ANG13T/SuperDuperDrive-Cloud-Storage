@@ -50,7 +50,7 @@ public class CredentialsController {
         System.out.println("deleting credential");
         this.credentialsService.deleteCredential(Long.parseLong(id));
         System.out.println("deleted credential");
-        return "redirect:/home";
+        return "redirect:/home?q=Credential+deleted!";
     }
 
 }
